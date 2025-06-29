@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT - Layout Clonado</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+    <style>
+        /* Reset e Variáveis */
+        :root {
+            --bg-color: #202123;
+            --sidebar-color: #101113;
+            --text-color: #fff;
+            --hover-color: rgba(255, 255, 255, 0.1);
+            --border-radius: 0.75rem;
+            --scrollbar-color: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Scrollbar Customizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: var(--scrollbar-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            height: 100%;
+            background-color: var(--sidebar-color);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-header select {
+            background-color: transparent;
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .sidebar-header select:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .sidebar-menu {
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            transition: background-color 0.2s ease;
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu li a:hover {
+            background-color: var(--hover-color);
+        }
+
+        .sidebar-menu li a svg {
+            margin-right: 0.75rem;
+            width: 20px;
+            height: 20px;
+            fill: var(--text-color);
+        }
+
+        .sidebar-footer {
+            text-align: center;
+        }
+
+        .sidebar-footer button {
+            background-color: #10a37f;
+            color: var(--text-color);
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            width: 100%;
+        }
+
+        .sidebar-footer button:hover {
+            background-color: #0e8c6d;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* Chat Area */
+        .chat-area {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            background-color: #343541;
+            border-radius: var(--border-radius);
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            width: fit-content;
+            max-width: 70%;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: #444654;
+        }
+
+        /* Input Area */
+        .input-area {
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centraliza horizontalmente */
+        }
+
+        .input-container {
+            background-color: #40414f;
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            width: 90%; /* Ocupa 90% da largura disponível */
+            max-width: 800px; /* Define uma largura máxima */
+        }
+
+        .input-container textarea {
+            flex-grow: 1;
+            background-color: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 1rem;
+            padding: 0.5rem;
+            resize: none;
+            height: 30px;
+            overflow: hidden;
+        }
+
+        .input-container textarea:focus {
+            outline: none;
+        }
+
+        .input-container .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-container .icons button,
+        .input-container .icons a {
+            background-color: transparent;
+            border: none;
+            color: var(--text-color);
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            margin: 0 0.25rem;
+            text-decoration: none;
+        }
+
+        .input-container .icons button:hover,
+        .input-container .icons a:hover {
+            background-color: var(--hover-color);
+        }
+
+        .input-container .icons svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-color);
+        }
+
+        /* Avatar */
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-left: auto;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <select>
+                <option>Gemini</option>
+                <option>ChatGPT</option>
+                <option>DeepSeek</option>
+            </select>
+            <div class="avatar">
+                <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="Avatar">
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li><a href="#"><svg><use xlink:href="#icon-new"></use></svg> Novo Chat</a></li>
+                <li><a href="#"><svg><use xlink:href="#icon-history"></use></svg> Histórico</a></li>
+                <li><a href="#"><svg><use xlink:href="#icon-settings"></use></svg> Configurações</a></li>
+                <li><a href="#"><svg><use xlink:href="#icon-help"></use></svg> Ajuda</a></li>
+                <li><a href="#"><svg><use xlink:href="#icon-logout"></use></svg> Sair</a></li>
+                <!-- Adicione mais itens de menu aqui -->
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+            <button>Obter Plus</button>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <div class="chat-area">
+            <div class="message">Olá! Como posso ajudar?</div>
+            <div class="message user">Estou testando o layout.</div>
+            <!-- Adicione mais mensagens aqui -->
+        </div>
+        <div class="input-area">
+            <div class="input-container">
+                <textarea placeholder="Envie uma mensagem"></textarea>
+                <div class="icons">
+                    <a href="#"><i class="fa fa-paperclip"></i></a>
+                    <a href="#"><i class="fa fa-tools"></i></a>
+                    <button><i class="fa fa-microphone"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Definições de Ícones SVG (exemplo) -->
+    <svg style="display: none;">
+        <symbol id="icon-new" viewBox="0 0 24 24">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </symbol>
+        <symbol id="icon-history" viewBox="0 0 24 24">
+            <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-3.87 0-7-3.13-7-7H4c0 4.97 4.03 9 9 9s9-4.03 9-9-4.03-9-9-9zm-1 5v5h4l-2.51 1.49L12 13V8z"/>
+        </symbol>
+        <symbol id="icon-settings" viewBox="0 0 24 24">
+            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.33-.02-.64-.06-.94l2.03-1.58c.26-.2.29-.56.08-.85-.21-.3-.7-.34-.96-.08l-2.66 2.07c-.39-.27-.8-.48-1.24-.62l.32-2.71c.05-.41-.02-.82-.23-1.11-.22-.3-.63-.39-1.04-.2l-2.49.52c-.43-.17-.9-.26-1.38-.26s-.95.09-1.38.26l-2.49-.52c-.41-.19-.82-.1-.1.04.23.2.31.61.26 1.04l.32 2.71c-.44.14-.85.35-1.24.62L2.92 8.51c-.28-.26-.77-.22-.96.08-.21.29-.18.65.08.85l2.03 1.58c-.04.3-.06.61-.06.94 0 .33.02.64.06.94l-2.03 1.58c-.26.2-.29.56-.08.85.21.3.7.34.96.08l2.66-2.07c.39.27.8.48 1.24.62l-.32 2.71c-.05.41.02.82.23 1.11.22.3.63.39 1.04.2l2.49-.52c.43.17.9.26 1.38.26s.95-.09 1.38-.26l2.49.52c.41.19.82.1.04-.23-.23-.2-.31-.61-.26-1.04l-.32-2.71c.44-.14.85-.35 1.24-.62l-2.66 2.07c.26.26.75.22.96-.08.21-.29.18-.65-.08-.85l-2.03-1.58zM12 15.65c-2.03 0-3.65-1.62-3.65-3.65s1.62-3.65 3.65-3.65 3.65 1.62 3.65 3.65-1.62 3.65-3.65 3.65z"/>
+        </symbol>
+        <symbol id="icon-help" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-6h2v6zm0-8h-2V7h2v4z"/>
+        </symbol>
+        <symbol id="icon-logout" viewBox="0 0 24 24">
+            <path d="M17 7l-1.41 1.41L15 7.83V15h-6V7.83l-.59.58L7 7l5-5 5 5zm-9 8v4h12v-4H8z"/>
+        </symbol>
+    </svg>
+
+</body>
+</html>
