@@ -143,7 +143,7 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            height: 100%;
+            height: 95%;
         }
 
         /* Chat Area */
@@ -153,6 +153,9 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
+            display: flex;
+            align-items: center;
+  
         }
 
         .message {
@@ -161,12 +164,18 @@
             padding: 0.75rem 1rem;
             margin-bottom: 0.5rem;
             width: fit-content;
-            max-width: 70%;
+            max-width: 100%;
         }
 
         .message.user {
             align-self: flex-end;
             background-color: #444654;
+        }
+
+        .message.bot {
+            align-self: flex-start; 
+            background-color: #202123;
+            
         }
 
         /* Input Area */
@@ -184,7 +193,7 @@
             padding: 0.5rem;
             display: flex;
             align-items: center;
-            width: 90%; /* Ocupa 90% da largura disponível */
+            width: 75%; /* Ocupa 90% da largura disponível */
             max-width: 800px; /* Define uma largura máxima */
         }
 
@@ -196,7 +205,7 @@
             font-size: 1rem;
             padding: 0.5rem;
             resize: none;
-            height: 30px;
+            height: 90px;
             overflow: hidden;
         }
 
@@ -247,6 +256,56 @@
             height: 100%;
             object-fit: cover;
         }
+
+
+/* === NOVA DIV que limita tudo internamente === */
+.chat-content {
+  /* largura fluida até um máximo igual ao seu input (800px no exemplo) */
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;             /* centraliza no eixo horizontal */
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* === Chat area agora fica 100% da chat-content === */
+.chat-content .chat-area {
+  flex: 1;
+  padding: 1rem 0;            /* padding vertical, sem alterar as laterais */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  /* NÃO precisa mais de align-items:center aqui */
+}
+
+/* === Mensagens continuam como antes, mas limitadas pelo wrapper === */
+.chat-content .message {
+  width: fit-content;
+  max-width: 100%;            /* não ultrapassa a largura do wrapper */
+  margin: 0.5rem;             /* ajusta margem geral */
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  background-color: #343541;
+  color: var(--text-color);
+}
+
+/* Só o usuário vai pra direita */
+.chat-content .message.user {
+  align-self: flex-end;
+  background-color: #444654;
+}
+
+/* Bot fica à esquerda (default flex-start) */
+.chat-content .message.bot {
+  align-self: flex-start;
+  background-color: #202123;
+}
+
+/* === E o input-area também deve entrar no wrapper === */
+.chat-content .input-area {
+  padding: 1rem 0;            /* padding vertical se quiser */
+}
     </style>
 </head>
 <body>
@@ -279,10 +338,13 @@
 
     <div class="chat-container">
         <div class="chat-area">
-            <div class="message">Olá! Como posso ajudar?</div>
-            <div class="message user">Estou testando o layout.</div>
-            <!-- Adicione mais mensagens aqui -->
+            <div class="chat-content">
+                <div class="message bot">Olá! Como posso ajudar?</div>
+                <div class="message user">Estou testando o layout.</div>
+                <!-- Adicione mais mensagens aqui -->
+            </div>
         </div>
+
         <div class="input-area">
             <div class="input-container">
                 <textarea placeholder="Envie uma mensagem"></textarea>
